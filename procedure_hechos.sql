@@ -126,12 +126,11 @@ cursor c_tiempo is
 select id from d_tiempo where fecha between fecha_inicial and fecha_final;
 
 cursor c_compras is
-select dt.id, dm.id, dc.id, sum(cvp.cantidad), sum(cvp.cantidad * cvp.precio)
-from cataologo_compras cc, d_cliente_ventas_cliente dc, d_medicamento_compras_prov dm, d_tiempo dt, catalogo_ventas cv
-where cvp.venta_id = cv.id 
-AND cv.fecha between fecha_inicial and fecha_final
-and cv.cliente_id = dc.cliente_id
-and trunc(cv.fecha) = trunc(dt.fecha)
+select dt.id, dm.id, dc.id, sum(cc.cantidad), sum(cc.cantidad * cc.precio)
+from cataologo_compras cc, d_cliente_ventas_cliente dc, d_medicamento_compras_prov dm, d_tiempo dt, d_proveedor_compras_proveedor pc
+where cc.proveedor_id = pc.proveedor_id 
+AND cc.fecha between fecha_inicial and fecha_final
+and trunc(cc.fecha) = trunc(dt.fecha)
 and cc.id = dm.compra_id
 group by dt.id, dm.id, dc.id
 order by 1,2,3;
