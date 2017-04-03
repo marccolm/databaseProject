@@ -63,7 +63,7 @@ select id from d_tiempo where fecha between fecha_inicial and fecha_final;
 
 cursor c_inventario is
 select dm.id, dt.id, ci.fecha_caducidad
-from d_medicamento_ventas dm, d_tiempo dt, catalogo_inventario ci
+from d_medicamento_inventario dm, d_tiempo dt, catalogo_inventario ci
 where ci.medicamento_id = dm.medicamento_id
 and trunc(ci.fecha_caducidad) < trunc(dt.fecha)
 group by dt.id, dm.id, ci.fecha_caducidad
